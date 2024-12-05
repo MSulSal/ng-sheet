@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ng Sheets</title>
+    <!-- Include AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+    <script src="main.js"></script>
+    <script>
+        try {
+            angular.module("500lines");
+        } catch (e) {
+            location = "es5/index.html";
+        }
+    </script>
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body ng-app="500lines" ng-controller="Spreadsheet" ng-cloak>
+    <table>
+        <tr>
+            <th>
+                <button type="button" ng-click="reset(); calc()">Reset</button>
+            </th>
+            <th ng-repeat="col in Cols">
+                {{col}}
+            </th>
+        </tr>
+        <tr ng-repeat="row in Rows">
+            <th>{{row}}</th>
+            <td ng-repeat="col in Cols" 
+                ng-class="{formula: ('=' === (sheet[col + row] || '')[0])}" 
+                contenteditable="true" 
+                ng-blur="sheet[col + row] = $event.target.innerText; calc()">
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
